@@ -1,0 +1,43 @@
+This content is part of the UAV Open System Project
+  http://www.uavos.com/
+------------------------------------------------------------------
+Gumstix Overo Open Embedded build environment
+
+------------------------------------------------------------------
+Makefile targets:
+------------------------------------------------------------------
+make install    - install everything for OE and gumstix dev
+
+make install-scripts - install gumnet, guminstall scripts to ~/bin
+make install-tools - install deb packages for development
+
+make install-oe - download and install OpenEmbedded
+                  default OE path: ~/Projects/overo-oe
+
+make update-oe  - update OE recipes
+
+make clean-oe   - clean OE, forcing to rebuild everything
+
+make            - default target will bitbake overo-ap-image
+make -- "TARGET"- forwarded to bitbake, f.ex. 
+                  make -- "-c clean virtual/kernel"
+                  make minimal-image
+
+make card-init  - format MicroSD card, install factory image
+make card       - update card contents with compiled images
+                  after booting from card, start ./init-overo-ap
+                  to install compiled images to Overo flash
+
+make kernel     - Compile kernel for the image
+make kernel-rebuild - Rebuild kernel for the image
+make kernel-config  - make menuconfig for kernel
+
+------------------------------------------------------------------
+install-scripts-mmc
+
+1. Copy folder content to bootable MicroSD card rootfs.
+2. Copy u-boot.bin, uImage.bin, rootfs.tar.bz2 to the same folder.
+3. Boot Overo from MicroSD.
+4. Run ./init-overo-ap
+------------------------------------------------------------------
+

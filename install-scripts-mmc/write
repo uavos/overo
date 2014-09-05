@@ -1,0 +1,3 @@
+#!/bin/sh
+./write-uboot && ./write-kernel && ./write-rootfs
+

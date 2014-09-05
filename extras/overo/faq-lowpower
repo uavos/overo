@@ -1,0 +1,15 @@
+
+Download and extract this archive to your over-oe directory: http://iconux.org/files/oe/user.collection_overo_pm.tar.gz
+
+Then run
+
+bitbake -b user.collection/recipes/linux/linux-omap-pm_2.6.38.bb
+
+This should download the pm kernel from git and build the kernel.
+
+Note:  The resulting kernel has sound disabled and the usb is "off".
+
+
+
+change the console to use ttyO2 instead of ttyS2?  For whatever reason, the serial ports on the omap are referred to now as ttyO# instead of ttyS#.   This change was made sometime around 2.6.37-rc3 or so...
+

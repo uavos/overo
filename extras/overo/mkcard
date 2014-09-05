@@ -1,0 +1,124 @@
+#! /bin/sh
+
+#------ root ------
+if [[ $(whoami) != root ]] ; then
+  sudo "$0" "$@"
+  exit
+fi
+#------------------
+
+#===============================================================
+function do_create {
+  echo "WARNING: This will destroy all data on your card."
+  echo "Using drive: $DRIVE"
+  read -p "Are tou sure you want to continue (y/n)? " yn
+  [ "$yn" == "y" ] ||exit 0
+  umount ${DRIVE}${SEP}1
+  umount ${DRIVE}${SEP}2
+  dd if=/dev/zero of=$DRIVE bs=1024 count=1024 || exit 1
+  
+  SIZE=`fdisk -l $DRIVE | grep Disk | awk '{print $5}'`
+  echo DISK SIZE – $SIZE bytes
+  CYLINDERS=`echo $SIZE/255/63/512 | bc`
+  echo CYLINDERS – $CYLINDERS
+
+  {
+  echo ,5,0x0C,*
+  echo ,,,-
+  } | sfdisk -D -H 255 -S 63 -C $CYLINDERS $DRIVE
+
+  mkfs.vfat -F 32 -n boot ${DRIVE}${SEP}1 ||exit 1
+  mke2fs -j -L rootfs ${DRIVE}${SEP}2 ||exit 1
+  echo "MicroSD card formatted."
+}
+#===============================================================
+function do_mount {
+  mkdir -p /media/boot
+  mkdir -p /media/rootfs
+  mount ${DRIVE}${SEP}1 /media/boot
+  mount ${DRIVE}${SEP}2 /media/rootfs
+  mount|grep ${DRIVE}
+  echo "Card mounted."
+}
+function do_unmount {
+  echo "Please wait..."
+  sync
+  umount /media/boot && rm -R /media/boot
+  umount /media/rootfs && rm -R /media/rootfs
+  echo "Card unmounted."
+}
+
+function banner {
+  echo "--------------------------------------------------"
+  echo "MicroSD card support utility. http://www.uavos.com"
+}
+#===============================================================
+#  main
+#===============================================================
+
+while getopts ":cmud:" Option
+do
+  case $Option in
+    d     ) DRIVE=$OPTARG ;;
+    c     ) do_create=1 ;;
+    m     ) do_mount=1 ;;
+    u     ) do_unmount=1 ;;
+    *     )
+	banner
+        echo "usage: ${0##*/} [options]"
+        echo -e "  -d [dev] \tDrive to use."
+        echo -e "  -c \tCreate partitions and format card."
+        echo -e "  -m \tMount card (/media/boot, /media/rootfs)."
+        echo -e "  -u \tUnmount card."
+        exit 1 ;;
+  esac
+done
+
+if [ $do_unmount ]; then
+  do_unmount || exit 1
+fi
+
+[ ! $do_create ] && [ ! $do_mount ] && exit 0
+
+banner
+
+#confirm drive
+if [[ ! -e $DRIVE ]]; then
+  if [ -e /dev/mmcblk0 ]; then
+    DRIVE=/dev/mmcblk0
+  else
+    if [ -e /dev/sde ]; then
+      DRIVE=/dev/sde
+    fi
+  fi
+fi
+read -p "Drive (default $DRIVE): " drv || exit 1
+[ -e "$drv" ] && DRIVE="$drv"
+[ "${DRIVE:(-1)}" == "0" ] && SEP="p"
+if [[ ! -e $DRIVE ]]; then
+  echo "Drive not found: $DRIVE"
+  exit 1
+fi
+
+
+##########################
+if [ $do_create ]; then
+  #echo "##Created##"
+  do_create || exit 1
+fi
+
+if [ $do_mount ]; then
+  do_mount || exit 1
+fi
+
+
+
+
+
+
+
+
+
+
+
+

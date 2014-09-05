@@ -1,0 +1,12 @@
+#!/bin/sh
+dir=$PWD
+uimage=uImage-overo.bin
+
+if [ -e $uimage ]; then
+echo "Erasing kernel partition ..."
+flash_eraseall /dev/mtd3
+echo "Writing kernel to NAND ..."
+nandwrite -p /dev/mtd3 $uimage
+else
+echo "ERROR:  couldn't find kernel binary"
+fi

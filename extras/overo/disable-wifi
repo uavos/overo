@@ -1,0 +1,6 @@
+http://old.nabble.com/Overo-Air-bluetooth-and-wifi-power-td28775963.html
+
+# disable wifi
+echo 0 > /sys/class/gpio/gpio16/value
+# disable bluetooth
+echo 0 > /sys/class/gpio/gpio164/value

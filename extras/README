@@ -1,0 +1,26 @@
+This content is part of the UAV Open System Project
+  http://www.uavos.com/
+------------------------------------------------------------------
+Helper scripts for Gumstix boards
+
+------------------------------------------------------------------
+kermrc
+
+Default 'kermit' configuration. Copy to ~/.kermrc
+
+------------------------------------------------------------------
+gumnet
+
+Bluetooth communication script for Host PC.
+Create a symbolic link to the script in your home bin directory.
+Type 'gumnet -h' for usage help.
+
+------------------------------------------------------------------
+guminstall
+
+Create a symbolic link to the script in your home bin directory.
+guminstall <filename> installs executable to gumstix at
+/usr/local/bin/
+
+------------------------------------------------------------------
+

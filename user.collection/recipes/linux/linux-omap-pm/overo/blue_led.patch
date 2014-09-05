@@ -1,0 +1,12 @@
+diff --git a/arch/arm/mach-omap2/board-overo.c b/arch/arm/mach-omap2/board-overo.c
+index 60f8db3..e2e4aee 100644
+--- a/arch/arm/mach-omap2/board-overo.c
++++ b/arch/arm/mach-omap2/board-overo.c
+@@ -338,6 +338,7 @@ static struct twl4030_gpio_platform_data overo_gpio_data = {
+ 	.irq_base	= TWL4030_GPIO_IRQ_BASE,
+ 	.irq_end	= TWL4030_GPIO_IRQ_END,
+ 	.setup		= overo_twl_gpio_setup,
++	.use_leds	= true,
+ };
+ 
+ static struct twl4030_usb_data overo_usb_data = {

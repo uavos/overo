@@ -1,0 +1,13 @@
+#!/bin/sh
+dir=$PWD
+uboot=u-boot-overo.bin
+if [ -e $uboot ]; then
+echo "Erasing u-boot partition ..."
+flash_eraseall /dev/mtd1
+echo "Erasing u-boot environment partition ..."
+flash_eraseall /dev/mtd2
+echo "Writing u-boot to NAND ..."
+nandwrite -p /dev/mtd1 $uboot
+else
+echo "ERROR:  couldn't find u-boot binary"
+fi

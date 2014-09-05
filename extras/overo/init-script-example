@@ -1,0 +1,122 @@
+#!/bin/sh
+#
+if [ ! -e /etc/init.d/S42nettime ] ; then
+  echo "Adding startup script for net-time"
+  cat <<NETTIME > /etc/init.d/S42nettime
+#!/bin/sh
+#
+# Set time via network
+#
+
+start() {
+        # a short pause to allow eth0 to come up properly
+  sleep 5
+  # I'm in Central Time Zone, adjust accordingly
+  echo "CST6CDT" > /etc/TZ
+  echo -n "Setting time from NTP... "
+  # of course, change the ntp pool address as needed
+  rdate -s us.pool.ntp.org
+  # print out the date/time found
+  date
+}
+restart() {
+        start
+}
+
+case "\$1" in
+  start)
+        start
+        ;;
+  restart|reload)
+        restart
+        ;;
+  stop)
+  ;;
+  *)
+        echo \$"Usage: \$0 {start|stop|restart}"
+        exit 1
+esac
+
+exit \$?
+NETTIME
+  chmod +x /etc/init.d/S42nettime
+fi
+#
+if [ ! -e /etc/init.d/S99checkin ] ; then
+  echo "Adding startup script for unit checkin"
+  cat <<CHECKIN >/etc/init.d/S99checkin
+#!/bin/sh
+#
+start() {
+  # get serial # from /proc/cpuinfo (assumed unique for each)
+        serial=\`grep -i "^serial" /proc/cpuinfo | sed "s/^.*: //"\`
+  # attempt to get a particular webpage on my home server to say hello
+  # contents are discarded at the moment, may change later
+  wget -O - "http://lornix.com/gumstix/checkin/?boot=\${serial}" >/dev/null 2>&1
+}
+restart() {
+        start
+}
+
+case "\$1" in
+  start)
+        start
+        ;;
+  restart|reload)
+        restart
+        ;;
+  stop)
+  ;;
+  *)
+        echo \$"Usage: \$0 {start|stop|restart}"
+        exit 1
+esac
+
+exit \$?
+CHECKIN
+  chmod +x /etc/init.d/S99checkin
+fi
+#
+# remove the bluetooth and bonjour stuff
+if [ -e /etc/init.d/S30bluetooth ] ; then
+  echo "Disabling bluetooth startup script"
+  mv /etc/init.d/S30bluetooth /etc/init.d/xS30bluetooth
+fi
+#
+if [ -e /etc/init.d/S50bonjour ] ; then
+  echo "Disabling bonjour startup script"
+  mv /etc/init.d/S50bonjour /etc/init.d/xS50bonjour
+fi
+#
+# remove the big mmc/CF msg from motd
+if [ ! -e /etc/motd.old ] ; then
+  echo "Removing mmc/CF banner from motd"
+  # move big banner thingy out of the way
+  mv /etc/motd /etc/motd.old
+  # create a zero-byte dummy so no one complains
+  # (shouldn't happen... but...)
+  touch /etc/motd
+fi
+#
+if [ 0 -ne $(grep -c "^pcmcia" /etc/modules) ] ; then
+  echo "Adjusting /etc/modules for mmc access"
+  # uncomment some, comment others
+  sed -i -e "s/^#mmc_block/mmc_block/" \
+         -e "s/^#pxamci/pxamci/" \
+         -e "s/^smc91x/#&/" \
+         -e "s/^pcmcia/#&/" \
+      /etc/modules
+fi
+#
+if [ 0 -ne $(grep -c "^auto mwlan0" /etc/network/interfaces) ] ; then
+  echo "Adjusting /etc/network/interfaces for mmc access"
+  echo "Inserting gumstix hostname statement into file"
+  # comment a few, add a line to one
+  sed -i -e "s/^auto mwlan0/#&/" \
+         -e "s/^iface mwlan0/#&/" \
+         -e "s/^.*pre-up.*essid any txpower/#&/" \
+         -e "/iface eth0 inet dhcp/a\ \ hostname gumstix\
+" /etc/network/interfaces
+fi
+#
+

@@ -1,0 +1,50 @@
+--- a/etc/bluetooth/main.conf	2011-05-02 11:12:24.000000000 +0300
++++ b/etc/bluetooth/main.conf	2011-05-02 15:57:25.000000000 +0300
+@@ -4,1 +4,1 @@
+-#DisablePlugins = network,input
++DisablePlugins = network,input
+--- a/etc/default/bluetooth	2011-05-02 11:12:30.000000000 +0300
++++ b/etc/default/bluetooth	2011-05-02 15:58:11.000000000 +0300
+@@ -5,5 +5,5 @@
+-HCIATTACH_TTY=ttyS1
++HCIATTACH_TTY=ttyO1
+ HCIATTACH_TYPE=csr
+ HCIATTACH_START_SPEED=115200
+-HCIATTACH_SPEED=115200
++HCIATTACH_SPEED=921600
+-HCIATTACH_HANDSHAKE=noflow
++HCIATTACH_HANDSHAKE=flow
+@@ -30,1 +30,1 @@
+-RFCOMM_ENABLE=true
++RFCOMM_ENABLE=false
+@@ -42,1 +42,1 @@
+-PAND_ENABLE=false
++PAND_ENABLE=true
+@@ -46,1 +46,1 @@
+-#PAND_OPTIONS="--listen --role NAP"
++PAND_OPTIONS="--listen --role PANU"
+--- a/etc/hosts	2011-05-02 11:10:23.000000000 +0300
++++ b/etc/hosts	2011-05-03 19:50:03.977326935 +0300
+@@ -0,0 +2,1 @@
++10.1.1.100	gcu
+--- a/etc/modprobe.d/blacklist.conf	1970-01-01 03:00:00.000000000 +0300
++++ b/etc/modprobe.d/blacklist.conf	2011-05-02 15:41:13.000000000 +0300
+@@ -0,0 +1,4 @@
++blacklist libertas_sdio
++blacklist libertas
++blacklist cfg80211
++blacklist lib80211
+--- a/etc/inittab	2011-05-02 11:12:24.000000000 +0300
++++ b/etc/inittab	2011-05-02 15:57:25.000000000 +0300
+@@ -31,1 +31,2 @@
+-S:2345:respawn:/sbin/getty 115200 ttyS2
++S:2345:respawn:/sbin/getty 115200 ttyO2
++ap:2345:once:/usr/local/bin/shiva &
+--- a/etc/ssh/sshd_config	2011-05-02 11:12:24.000000000 +0300
++++ b/etc/ssh/sshd_config	2011-05-02 15:57:25.000000000 +0300
+@@ -41,1 +41,1 @@
+-#PermitRootLogin yes
++PermitRootLogin yes
+@@ -62,1 +62,1 @@
+-#PermitEmptyPasswords no
++PermitEmptyPasswords yes

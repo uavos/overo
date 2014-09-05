@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" >
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="gumstix, openembedded, bitbake, kernel, drivers, modules" />
+  <meta name="title" content="Gumstix kernel development" />
+  <meta name="author" content="Administrator" />
+  <meta name="description" content="Gumstix kernel and driver work without bitbake." />
+  <meta name="generator" content="Joomla! 1.5 - Open Source Content Management" />
+  <title>Gumstix kernel development</title>
+  <link href="/templates/rhuk_milkyway/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script type="text/javascript" src="/media/system/js/mootools.js"></script>
+  <script type="text/javascript" src="/media/system/js/caption.js"></script>
+
+
+<link rel="stylesheet" href="/templates/system/css/system.css" type="text/css" />
+<link rel="stylesheet" href="/templates/system/css/general.css" type="text/css" />
+<link rel="stylesheet" href="/templates/rhuk_milkyway/css/template.css" type="text/css" />
+<link rel="stylesheet" href="/templates/rhuk_milkyway/css/black.css" type="text/css" />
+<link rel="stylesheet" href="/templates/rhuk_milkyway/css/black_bg.css" type="text/css" />
+<!--[if lte IE 6]>
+<link href="/templates/rhuk_milkyway/css/ieonly.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+</head>
+<body id="page_bg" class="color_black bg_black width_fmax">
+<a name="up" id="up"></a>
+<div class="center" align="center">
+	<div id="wrapper">
+		<div id="wrapper_r">
+			<div id="header">
+				<div id="header_l">
+					<div id="header_r">
+						<div id="logo"></div>
+						
+					</div>
+				</div>
+			</div>
+
+			<div id="tabarea">
+				<div id="tabarea_l">
+					<div id="tabarea_r">
+						<div id="tabmenu">
+						<table cellpadding="0" cellspacing="0" class="pill">
+							<tr>
+								<td class="pill_l">&nbsp;</td>
+								<td class="pill_m">
+								<div id="pillmenu">
+									<ul id="mainlevel-nav"><li><a href="/index.php?option=com_content&amp;view=article&amp;id=72&amp;Itemid=80" class="mainlevel-nav" >Contact</a></li><li><a href="/index.php?option=com_content&amp;view=section&amp;layout=blog&amp;id=5&amp;Itemid=67" class="mainlevel-nav" >Gumstix</a></li><li><a href="/index.php?option=com_content&amp;view=section&amp;layout=blog&amp;id=9&amp;Itemid=76" class="mainlevel-nav" >Arduino</a></li><li><a href="/index.php?option=com_content&amp;view=section&amp;layout=blog&amp;id=12&amp;Itemid=90" class="mainlevel-nav" >Maple</a></li><li><a href="/index.php?option=com_content&amp;view=section&amp;layout=blog&amp;id=8&amp;Itemid=69" class="mainlevel-nav" >Beagleboard</a></li><li><a href="/index.php?option=com_content&amp;view=section&amp;layout=blog&amp;id=6&amp;Itemid=64" class="mainlevel-nav" >Projects/Code</a></li><li><a href="/index.php?option=com_weblinks&amp;view=category&amp;id=19&amp;Itemid=88" class="mainlevel-nav" >Resources</a></li></ul>
+								</div>
+								</td>
+								<td class="pill_r">&nbsp;</td>
+							</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="search">
+				
+			</div>
+
+			<div id="pathway">
+				<span class="breadcrumbs pathway">
+<a href="http://www.jumpnowtek.com/" class="pathway">Home</a> <img src="/templates/rhuk_milkyway/images/arrow.png" alt=""  /> Gumstix kernel dev</span>
+
+			</div>
+
+			<div class="clr"></div>
+
+			<div id="whitebox">
+				<div id="whitebox_t">
+					<div id="whitebox_tl">
+						<div id="whitebox_tr"></div>
+					</div>
+				</div>
+
+				<div id="whitebox_m">
+					<div id="area">
+									
+
+						<div id="leftcolumn">
+															<div class="module_menu">
+			<div>
+				<div>
+					<div>
+													<h3>Popular</h3>
+											<ul class="menu"><li class="item1"><a href="http://www.jumpnowtek.com/"><span>Home</span></a></li><li id="current" class="active item54"><a href="/index.php?option=com_content&amp;view=article&amp;id=46&amp;Itemid=54"><span>Gumstix kernel dev</span></a></li><li class="item61"><a href="/index.php?option=com_content&amp;view=article&amp;id=55&amp;Itemid=61"><span>Gumstix u-boot dev</span></a></li><li class="item78"><a href="/index.php?option=com_content&amp;view=article&amp;id=69&amp;Itemid=78"><span>Gumstix I2C</span></a></li><li class="item60"><a href="/index.php?option=com_content&amp;view=article&amp;id=54&amp;Itemid=60"><span>Gumstix GPIO</span></a></li><li class="item63"><a href="/index.php?option=com_content&amp;view=article&amp;id=56&amp;Itemid=63"><span>Gumstix PWM</span></a></li><li class="item55"><a href="/index.php?option=com_content&amp;view=article&amp;id=48&amp;Itemid=55"><span>Gumstix network boot</span></a></li><li class="item65"><a href="/index.php?option=com_content&amp;view=article&amp;id=53&amp;Itemid=65"><span>Gumstix USB networking</span></a></li><li class="item62"><a href="/index.php?option=com_content&amp;view=article&amp;id=57&amp;Itemid=62"><span>Writing a Linux SPI driver</span></a></li><li class="item89"><a href="/index.php?option=com_content&amp;view=article&amp;id=70&amp;Itemid=89"><span>Gumstix developer tips</span></a></li></ul>					</div>
+				</div>
+			</div>
+		</div>
+	
+												</div>
+
+												<div id="maincolumn">
+													
+							<table class="nopad">
+								<tr valign="top">
+									<td>
+										
+<div id="page">
+
+
+
+<h2 class="contentheading">
+	Gumstix kernel development</h2>
+
+<p class="articleinfo">
+		<span class="modifydate">
+		Last Updated on Friday, 25 March 2011 20:23	</span>
+	
+	
+	</p>
+
+
+<p class="buttonheading">
+	</p>
+
+
+
+
+
+<p>Some tips for working on the Linux kernel with OE tools and Gumstix Overo boards.</p>
+
+<ul>
+<li><a href="#_kernel_config">Reconfiguring the kernel</a> (defconfig)</li>
+<li><a href="#_patching_board_file">Patching the board file</a> (board-overo.c)</li>
+<li><a href="#_kernel_work_without_bitbake">Working on the kernel without bitbake</a></li>
+<li><a href="#_driver_modules">Working on driver modules</a></li>
+</ul>
+<p> </p>
+<p><a name="_kernel_config"></a></p>
+<h1>Reconfiguring the kernel</h1>
+<p> </p>
+<p>These instructions assume you are using the default gumstix-oe kernel, the 'virtual/kernel', which is declared here</p>
+<pre>$ cd $OVEROTOP<br />$ grep linux org.openembedded.dev/conf/machine/overo.conf<br />PREFERRED_PROVIDER_virtual/kernel = "linux-omap3"<br /></pre>
+<p>And the current version and revision as defined here</p>
+<pre>$ bitbake --show-versions | grep linux-omap3<br />linux-omap3                            0:2.6.36-r97<br /></pre>
+<p>So the rest of the example will assume linux-omap3-2.6.36 revision 97. This is the kernel that will be built when we use the reference  'virtual/kernel' in bitbake commands. Your kernel is probably different so make the appropriate substitutions.</p>
+<p> </p>
+<p>First build the kernel normally with bitbake. If you have built an image, then it's already done. If not run this command</p>
+<pre>$ bitbake virtual/kernel<br /></pre>
+<p>This will create a source directory in ${OVEROTOP}/tmp/work/overo-angstrom-linux-gnueabi/. In this case it will be</p>
+<p>${OVEROTOP}/tmp/work/overo-angstrom-linux-gnueabi/linux-omap3-2.6.36-r97</p>
+<p> </p>
+<p>Now modify the kernel configuration based on the existing configuration. Do this by passing a command argument to bitbake.</p>
+<pre>$ bitbake -c menuconfig virtual/kernel<br /></pre>
+<p>This invokes one of the standard kernel configuration tools <a href="http://en.wikipedia.org/wiki/Menuconfig">menuconfig</a> which provides a minimalist GUI based on the <a href="http://en.wikipedia.org/wiki/Ncurses"> ncurses</a> library. Make your changes and save them.</p>
+<p> </p>
+<p>Note: If this command does not launch an ncurses window, you are likely missing some tools on your workstation. For Ubuntu users, I have a <strong>check-installed.py</strong> script you can use to check your system. You can find it here - <a href="https://github.com/scottellis/oe-build-essentials-project">oe-build-essentials-project</a>. The other times this command can fail is if you do not have privileges to launch a window on the current DISPLAY. (TODO: Add instructions to fix this.)</p>
+<p> </p>
+<p>When you are done, the new kernel configuration file can be found here</p>
+<pre>${OVEROTOP}/tmp/work/overo-angstrom-linux-gnueabi/linux-omap3-2.6.36-r97/git/.config<br /></pre>
+<p> </p>
+<p>Copy that file to where the bitbake recipe for the kernel will use it.</p>
+<pre>$ cp ${OVEROTOP}/tmp/work/overo-angstrom-linux/gnueabi/linux-omap3-2.6.36-r97/git/.config \<br />   ${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap3-2.6.36/defconfig<br /><br /></pre>
+<p>For older OE snapshots, the kernel defconfig went in an <strong>overo</strong> sub-directory.</p>
+<pre>$ cp ${OVEROTOP}/tmp/work/overo-angstrom-linux/gnueabi/linux-omap3-2.6.34-r90/git/.config \<br />   ${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap3-2.6.34/<strong>overo</strong>/defconfig<br /><br /></pre>
+<p> </p>
+<p>Rebuild the kernel.</p>
+<pre>$ bitbake -c clean virtual/kernel; bitbake virtual/kernel</pre>
+<p> </p>
+<p>Then rebuild the rootfs to get the modules installed correctly. Substitute the image you are using.</p>
+<p>For example, if you are using the omap3-console-image</p>
+<pre>$ bitbake omap3-console-image<br /></pre>
+<p> </p>
+<p>Then deploy your kernel and rootfs to NAND, MMC or an NFS mount point as usual.</p>
+<p> </p>
+<p>You can skip the menuconfig step and directly modify the defconfig file since it is plain text. Many kernel options have dependencies. If you are unsure, you may want to stick with menuconfig.</p>
+<p>For example, to disable the ADS7846 touchscreen and/or the LGPHILIPS LB035Q02 display drivers to free up the Overo SPI 1 CS lines, you could do this with sed and not even invoke an editor.</p>
+<pre>sed -i 's:CONFIG_TOUCHSCREEN_ADS7846=m:# CONFIG_TOUCHSCREEN_ADS7846 is not set:g' defconfig<br />sed -i 's:CONFIG_PANEL_LGPHILIPS_LB035Q02=y:# CONFIG_PANEL_LGPHILIPS_LB035Q02 is not set:g' defconfig<br /></pre>
+<p> </p>
+<p>There are some additional modifications done to the defconfig file by OE before it becomes the .config the kernel is compiled with.</p>
+<p>One example for the Gumstix linux-omap3 kernels is the setup of the OTG USB controller driver to one of three modes, host, peripheral or otg. There is code in the OE recipe files (linux-omap3_2.6.3x.bb) that simplifies changing the USB mode. But this does mean that any manual changes you make to defconfig for the OTG controller may get overwritten.</p>
+<p>Some more details about the OTG controller can be found here - <a href="/index.php?option=com_content&amp;view=article&amp;id=53&amp;Itemid=65">USB Networking with Gumstix Overos</a>.</p>
+<p>Many of the non linux-omap3 recipes specify numerous patches, some that may be modifying the defconfig file. You can check through these patches if you have some unexplained behavior. Note that this won't be a problem if you go through the steps of generating a patch as described in the first part of this section and then making sure your patch is the last one applied.</p>
+<p>If neither of these explains why your defconfig is not getting used, refer to the run scripts bitbake generates in the kernel working temp directory. For the kernel in this example, it would be this script</p>
+<p>${OVEROTOP}/tmp/work/overo-angstrom-linux-gnueabi/linux-omap3-2.6.36-r97/tmp/run.do_configure.xxxx</p>
+<p> </p>
+<p>If you want to go back to the default defconfig file, you can use git to restore it.</p>
+<pre>$ cd $(OVEROTOP)<br />$ git checkout -- recipes/linux/linux-omap3-2.6.36/defconfig<br /></pre>
+<p>This clobbers your changes, so you should make a backup first.</p>
+<p> </p>
+<p>An alternative would be to create your own OE branch and let git do the backup work for you. Here are some ideas on <a href="/index.php?option=com_content&amp;view=article&amp;id=70:gumstix-dev-tips&amp;catid=35:gumstix&amp;Itemid=67">Gumstix / OE development</a> that might be useful.</p>
+<p> </p>
+<p><a name="_patching_board_file"></a></p>
+<h1>Patching the board file (board_overo.c)</h1>
+<p> </p>
+<p>I find kernel development and patch generation are best handled using the procedure in the next section (<a href="#_kernel_work_without_bitbake">working on the kernel without bitbake</a>). If the changes are very minor and only impact a single file, such as configuring spidev in the board-overo.c file, an abbreviated procedure like the following can be useful.</p>
+<p> </p>
+<p>Follow the same steps as above to get an initial kernel downloaded, patched and configured in the OETMP directory.</p>
+<p>As a convenience in writing this, here is a definition for the kernel source directory</p>
+<p>KERNEL_SRC = ${OVEROTOP}/tmp/work/overo-angstrom-linux-gnueabi/linux-omap3-2.6.36-r97</p>
+<p> </p>
+<p>The board-overo.c file can be found here</p>
+<p>${KERNEL_SRC}/git/arch/arm/mach-omap2/board-overo.c</p>
+<p> </p>
+<p>First make a copy of it</p>
+<pre>$ cd ${KERNEL_SRC}/git/arch/arm/mach-omap2<br />$ cp board-overo.c board-overo.c-orig<br /></pre>
+<p>Make your changes to board-overo.c and save it.</p>
+<pre>$ &lt;edit&gt; board-overo.c</pre>
+<p>Make a patch file of your differences.</p>
+<pre>$ cd ${KERNEL_SRC}<br />$ git diff --no-prefix git/arch/arm/mach-omap2/board-overo.c-orig \<br />            git/arch/arm/mach-omap2/board-overo.c &gt; my-board-overo.patch<br /></pre>
+<p><strong>Important Note:</strong> The patch must be generated from the $KERNEL_SRC directory to use with OE. If you generate your patch from another directory like $KERNEL_SRC/git then the patch will fail when bitbake tries to apply it during the build.</p>
+<p> </p>
+<p>Copy the patch to where the OE build system will use it.</p>
+<pre>$ cp overo-board.patch ${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap3-2.6.36/<br /></pre>
+<p>Edit the kernel recipe to use the patch</p>
+<pre>$ cd ${OVEROTOP}/org.openembedded.dev/recipes/linux<br />$ &lt;edit&gt; linux-omap3_2.6.36.bb<br /></pre>
+<p>Add a line like this</p>
+<pre>@@ -12,6 +12,7 @@ SRCREV = "587b76771e60ab7afd18709a8b9441c2175fc39c"<br /> SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-2.6.36;protocol=git \<br />           file://defconfig \<br />            file://${BOOT_SPLASH} \<br />+           file://my-board-overo.patch \<br />            "<br /> <br /> MUSB_MODE ?= "host"<br /></pre>
+<p> </p>
+<p>Or in the linux-omap3_2.6.34.bb recipe, it would look like this</p>
+<pre>@@ -15,6 +15,7 @@ PV = "2.6.34"<br /> <br /> SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap3-2.6.34;protocol=git \<br />           file://defconfig \<br />+           file://my-board-overo.patch \<br />           "<br /> <br /> SRC_URI_append = " \<br /></pre>
+<p> </p>
+<p>Then rebuild the kernel and rootfs as above and deploy.</p>
+<p> </p>
+<p><a name="_kernel_work_without_bitbake"></a></p>
+<h1>Working on the kernel without bitbake</h1>
+<p> </p>
+<p>You can directly use the cross-build tools OE provides when working on the kernel. At the bottom of this page is a script file with some environment variables to set things up.</p>
+<p>How you obtain your kernel source is up to you. What I usually do is use git and directly clone the linux repository that OE would have used.</p>
+<p>For example, if you look in the OE recipe for linux-omap3_2.6.36.bb you'll see</p>
+<pre>...<br />SRCREV = "587b76771e60ab7afd18709a8b9441c2175fc39c"<br />SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-2.6.36;protocol=git \<br />...<br /></pre>
+<p>To get this repository the command is</p>
+<pre>$ git clone -n git://www.sakoman.com/git/linux-omap-2.6.git linux-omap<br /></pre>
+<p>After the clone, you need to checkout the correct branch.</p>
+<p>Here is how to list the available branches</p>
+<pre>$ cd linux-omap<br />$ git branch -a<br />  remotes/origin/HEAD -&gt; origin/master<br />  remotes/origin/dss2<br />  remotes/origin/exp<br />  remotes/origin/for-tomba<br />  remotes/origin/master<br />  remotes/origin/omap-2.6.36<br />  remotes/origin/omap-2.6.37<br />  remotes/origin/omap-2.6.38<br />  remotes/origin/omap3-2.6.32<br />  remotes/origin/omap3-2.6.33<br />  remotes/origin/omap3-2.6.34<br />  remotes/origin/omap3-2.6.34-mmc3<br />  remotes/origin/omap3-2.6.35<br />  remotes/origin/whoi<br /></pre>
+<p>And this creates a local branch 2.6.36 that tracks the remote 2.6.36</p>
+<pre>$ git checkout -b omap-2.6.36 origin/omap-2.6.36<br /></pre>
+<p>In the case of the linux-omap3_2.6.36.bb recipe, a particular commit is referenced</p>
+<pre>SRCREV = "587b76771e60ab7afd18709a8b9441c2175fc39c"<br /></pre>
+<p>This is not a git tutorial, but to get a quick idea of how far back the 587b767 commit is you could run this</p>
+<pre>$ git log --oneline<br />1ebf6b3 omap: Fix mtd subpage read alignment<br />587b767 video: omap: vram: remove from normal memory<br />27c8d82 ARM: allow, but warn, when issuing ioremap() on RAM<br />d023172 OMAP: Overo: Add support for spidev<br />...<br /></pre>
+<p>So only the 1ebf6b3 commit separates the two.</p>
+<p>If you wanted to start from the exact place the linux-omap3_2.6.36.bb recipe will use, you could check out that commit directly. I am choosing a name for the branch that makes sense.</p>
+<pre>$ git checkout -b omap3-2.6.36r97 587b767<br />Switched to a new branch 'omap3-2.6.36r97'<br /><br />$ git branch<br />  omap-2.6.36<br />* omap3-2.6.36r97<br /><br />$ git log --oneline<br />587b767 video: omap: vram: remove from normal memory<br />27c8d82 ARM: allow, but warn, when issuing ioremap() on RAM<br />d023172 OMAP: Overo: Add support for spidev<br />...<br /></pre>
+<p>This is all standard git stuff and there is more then one way to go about it. If your overo-oe repository is up to date, the SRCREV will usually be the latest commit. The Gumstix maintainers do a good job keeping things current.</p>
+<p> </p>
+<p>Next I usually copy the overo kernel config file from the OE repository</p>
+<pre>$ cp ${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap3-2.6.36/defconfig .config</pre>
+<p>For older kernels, it's in the <strong>overo</strong> sub-directory.</p>
+<pre>$ cp ${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap3-2.6.34/overo/defconfig .config<br /></pre>
+<p> </p>
+<p>At this point you will have to manually apply any patches in the OE recipe if you want to start with the same kernel bitbake gives you. The Gumstix maintainer usually applies these patches directly to the repository, so for Overos there is nothing to be done. For Beagleboard repositories, you will likely have to do some work.</p>
+<p> </p>
+<p>Then, after sourcing the environment file at the bottom of the page, you can run normal kernel build commands like</p>
+<pre>make oldconfig (or make menuconfig)<br />make include/linux/version.h<br />make uImage<br />make modules<br /></pre>
+<p> </p>
+<p>Because you are now working in a proper git repository, generating  patches is much simpler. A git diff command with some formatting  arguments is all it takes.</p>
+<p>For example, if I were working on the musb driver and had changed several of the musb driver files, I might do this</p>
+<pre>$ git diff --src-prefix=git/ --dst-prefix=git/ &gt; musb-gadget.patch<br /></pre>
+<p>That musb-gadget.patch can now be added to OE the same way the board-overo.c patch was in the previous section.</p>
+<p>Note that diff-ing the entire repository like that could include changes from many files in one patch. You may want to be more selective when you generate your patches, breaking the solution down into smaller independent changes. This is generic git workflow stuff and there are plenty of git tutorials on the web to help you.</p>
+<p> </p>
+<p><a name="_driver_modules"></a></p>
+<h1>Working on driver modules</h1>
+<p> </p>
+<p>If you are building a module outside the kernel source tree you can use the header files and tools OE generated when it built a kernel. Source the environment file at the bottom of this page and your module Makefile can look like this</p>
+<p> </p>
+<pre>ifneq ($(KERNELRELEASE),)<br />    obj-m := &lt;your-module-name&gt;.o<br />else<br />    PWD := $(shell pwd)<br /><br />default:<br />        ifeq ($(strip $(KERNELDIR)),)<br />            $(error "KERNELDIR is undefined!")<br />        else<br />            $(MAKE) -C $(KERNELDIR) M=$(PWD) modules<br />        endif<br />endif<br /></pre>
+<p> </p>
+<p>This environment and general procedure also works for building U-Boot outside the OE directories and without bitbake.</p>
+<p> </p>
+<p>Here is the environment. Save it as a file like 'kernel-dev.txt' and then run the command</p>
+<pre>$ source kernel-dev.txt</pre>
+<p>--- kernel-dev.txt contents ---</p>
+<pre>if [[ -z "${KERNEL_CROSS_BUILD_ENVIRONMENT_SOURCED}" ]]; then<br /><br />        # Set OETMP to be your OE config TMPDIR. This is a configurable parameter for OE. <br /><br />        # For gumstix setups, it is set in ${OVEROTOP}/build/conf/site.conf<br />        # This is the gumstix default.<br />        OETMP=${OVEROTOP}/tmp<br /><br />        # For beagleboard setups, this is where it used to be ${OETREE}/build/conf/local.conf<br />        # I haven't checked in a long time. This was the default.<br />        # OETMP=${OETREE}/tmp<br /><br />	SYSROOTSDIR=${OETMP}/sysroots<br />	STAGEDIR=${SYSROOTSDIR}/`uname -m`-linux/usr<br /><br />        export KERNELDIR=${SYSROOTSDIR}/${MACHINE}-angstrom-linux-gnueabi/kernel<br /><br /> 	PATH=${PATH}:${STAGEDIR}/bin:${STAGEDIR}/armv7a/bin<br /><br />        unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE<br /><br />        export ARCH="arm"<br />        export CROSS_COMPILE="arm-angstrom-linux-gnueabi-"<br />        export CC="arm-angstrom-linux-gnueabi-gcc"<br />        export LD="arm-angstrom-linux-gnueabi-ld"<br />        export KERNEL_CROSS_BUILD_ENVIRONMENT_SOURCED="true"<br /><br />        echo "Altered environment for cross building kernel/u-boot with OE tools."<br />else<br />        echo "Cross build environment already configured."<br />fi<br /></pre>
+<p> </p>
+<p> </p>
+
+</div>
+
+										
+									</td>
+																	</tr>
+							</table>
+
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div id="whitebox_b">
+					<div id="whitebox_bl">
+						<div id="whitebox_br"></div>
+					</div>
+				</div>
+			</div>
+
+			<div id="footerspacer"></div>
+		</div>
+
+		<div id="footer">
+			<div id="footer_l">
+				<div id="footer_r">
+					<p id="syndicate">
+						
+					</p>
+<!--
+					<p id="power_by">
+	 				 	Powered by <a href="http://www.joomla.org">Joomla!</a>.
+						valid <a href="http://validator.w3.org/check/referer">XHTML</a> and <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>.
+					</p>
+-->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

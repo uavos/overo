@@ -1,0 +1,68 @@
+gst-launch -v  videotestsrc ! video/x-raw-yuv,  width=640, height=
+480 ! TIVidenc1 codecName=h264enc engineName=codecServer ! udpsink host= <host IP> port=5000
+took up 90% of my cpu.
+when i ran the same on 320X240 it took 30% of my cpu.
+ 
+
+E-con 3.2MP camera, overo fire FE.
+
+gst-launch -v v4l2src ! video/x-raw-yuv,width=640,height=480,framerate=30/1 ! TIVidenc1 codecName=h264enc engineName=codecServer !  udpsink host=192.168.80.110 port=10000
+
+Considering
+
+gst-launch -v  videotestsrc ! video/x-raw-yuv,  width=640, height=480 framerate=30/1 ! fakesink sync=false silent=true
+
+takes up 90% of the CPU by itself, I don't think videotestsrc is a good test of CPU usage.
+
+
+
+I'm testing with an Overo Tide running at 720 MHz. Kernel 2.6.32-psp 
+with 'task-gstreamer-ti' and my driver added to a slimmed down 
+omap3-console-image.
+
+I am running this command on the gumstix
+
+gst-launch v4l2src ! video/x-raw-yuv, width=640, height=480 ! smokeenc ! udpsink host=192.168.10.4 port=4000
+
+And this on the workstation (192.168.10.4)
+
+gst-launch udpsrc port=4000 ! smokedec ! autovideosink
+
+
+
+
+I'm using 2.6.38-rc8 (a5abba989deceb731047425812d268daf7536575) from the 
+mainline kernel (so, not linux-omap) with one additional DSP patch. The 
+patch will probably be in the 2.6.38.1.
+
+I have the DSP and host USB working on my Summit board with Overo Fire 
+but I haven't tried e.g. SGX or display and I think my config has some 
+problems with the USB OTG.
+
+Anyway, my stuff can be found from here:
+
+http://thread.gmane.org/gmane.linux.distributions.gumstix.general/57386
+
+http://tuomas.kulve.fi/tmp/overo-2011-03-19/
+#
+# Texas Instruments shared transport line discipline
+#
+# CONFIG_EASYCAP is not set
+CONFIG_TIDSPBRIDGE=m
+CONFIG_TIDSPBRIDGE_MEMPOOL_SIZE=0x600000
+CONFIG_TIDSPBRIDGE_RECOVERY=y
+
+
+
+http://code.google.com/p/gst-dsp/downloads/list
+
+There are some dsp tools that allows you to e.g. ping the DSP to see 
+that the communication is working properly.
+
+I'm using the gst-dsp that came with the MeeGo for encoding the video 
+from my webcam.
+
+
+http://thread.gmane.org/gmane.linux.distributions.gumstix.general/58285/focus=58386
+
+

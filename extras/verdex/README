@@ -1,0 +1,55 @@
+This content is part of the UAV Open System Project
+  http://www.uavos.com/
+------------------------------------------------------------------
+Helper scripts for Gumstix Verdex
+
+------------------------------------------------------------------
+uboot_silent.kermit - kermit script to make verdex boot
+                      silently, without any output to ttyS0
+uboot_nosilent.kermit - reverts back the changes
+
+This script must be send to u-boot loader of gumstix.
+
+------------------------------------------------------------------
+get-images - script to copy all gumstix flash to be then transferred
+             to another gumstix by 'put-images'
+
+Images are stored in 'mtdblock1' and 'mtdblock2' files.
+
+------------------------------------------------------------------
+'config' folder contains configuration files that must be changed
+on fresh gumstix to enable bluetooth PAN connection.
+
+------------------------------------------------------------------
+Updating Gumstix rootfs images
+If your gumstix is already configured for Bluetooth PAN,
+skip the steps 1..3.
+
+1. Connect gumstix via serial console.
+2. Change gumstix's configuration to allow Bluetooth PAN connection:
+    a) edit the file /etc/default/bluetooth, to contain the following:
+       PAND_ENABLE=true
+       PAND_OPTIONS="--listen --role PANU"
+    b) edit the file /etc/network/interfaces, to contain the following:
+      iface bnep0 inet static
+              address 10.1.1.1
+              netmask 255.255.255.0
+              network 10.1.1.0
+              gateway 10.1.1.100
+3. Restart gumstix.
+4. Establush Bluetooth PAN connection. By starting 'gumnet' script or this command:
+    sudo pand --role NAP --service PANU --nosdp -e gumstix -nz --search
+    (the same is done with script 'gumnet')
+5. Ensure you are connected:
+    pand -l
+    output:
+    gumstix XX:XX:XX:XX:XX:XX NAP
+6. Update gumstix root file system:
+    dd if=mtdblock2 | ssh root@gumstix dd of=/dev/mtdblock2 && \
+    dd if=mtdblock1 | ssh root@gumstix dd of=/dev/mtdblock1
+    (the same is done with script 'put-images')
+7. To see the progress, open a new terminal and type:
+    watch -d ifconfig gumstix
+   The size of data transfer is about 16Mb
+------------------------------------------------------------------
+

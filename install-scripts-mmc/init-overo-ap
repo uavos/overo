@@ -1,0 +1,20 @@
+#!/bin/sh
+
+./write || exit
+
+mkdir -p /media/mtdblock4 && \
+mount -t jffs2 /dev/mtdblock4 /media/mtdblock4 && \
+cd /media/mtdblock4 || exit
+
+tar -zxvf /home/root/ap.rootfs.tar.gz
+
+install -Cvt usr/local/bin /home/root/arm7/*
+
+patch -p1 </home/root/ap.patch
+
+sync
+
+cd /home/root
+
+umount /dev/mtdblock4
+reboot

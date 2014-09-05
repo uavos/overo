@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Getting filesystem images from gumstix. Please wait..."
+ssh root@10.1.1.1 dd if=/dev/mtdblock2 | dd of=mtdblock2
+ssh root@10.1.1.1 dd if=/dev/mtdblock1 | dd of=mtdblock1
+

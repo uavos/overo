@@ -1,0 +1,4 @@
+edit file:
+/var/lib/bluetooth/AA\:AA\:AA\:AA\:AA\:AA/config
+add line:
+mode discoverable

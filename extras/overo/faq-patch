@@ -1,0 +1,33 @@
+When you settle on the patch you want, you can get it into the OE framework
+this way.
+
+cd ${OETMP}/work/overo-angstrom-linux-gnueabi/linux-omap3-2.6.32-r51
+
+cp git/arch/arm/mach-omap2/board-overo.c
+git/arch/arm/mach-omap2/board-overo.c-orig
+
+[edit git/arch/arm/mach-omap2/board-overo.c]
+
+git diff git/arch/arm/mach-omap2/board-overo.c-orig
+git/arch/arm/mach-omap2/board-overo.c > my-board.patch
+
+cp my-board.patch
+${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap3-2.6.32
+
+cd $OVEROTOP
+
+[edit org.openembedded.dev/recipes/linux/linux-omap3_2.6.32.bb]
+...
+
+ SRC_URI_append = " \
+            file://${BOOT_SPLASH} \
++           file://my-board.patch;patch=1 \
+            "
+...
+
+Then rebuild and your patch will get applied by bitbake.
+
+bitbake -c clean linux-omap3-2.6.32
+bitbake -c rebuild linux-omap3-2.6.32
+
+

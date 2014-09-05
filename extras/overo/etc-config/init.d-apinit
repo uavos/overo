@@ -1,0 +1,20 @@
+#! /bin/sh
+#
+# apinit	This script initializes some peripherals used
+#		for SIVA AP system.
+#
+# Version:	@(#)apinit  1.00  6-Oct-2010  siva@uavos.com
+#
+# Install:	copy to /etc/init.d then run:
+#		update-rc.d apinit start 96 2 3 4 5 .
+
+# Power off WiFi
+/bin/echo 0 > /sys/class/gpio/gpio16/value
+
+# Make bluetooth discoverable
+$(sleep 5 && /usr/sbin/hciconfig hci0 piscan) &
+
+echo "AP init done."
+
+: exit 0
+

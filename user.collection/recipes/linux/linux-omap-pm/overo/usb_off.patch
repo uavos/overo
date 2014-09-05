@@ -1,0 +1,14 @@
+diff --git a/drivers/mfd/twl-core.c b/drivers/mfd/twl-core.c
+index a35fa7d..c5d6719 100644
+--- a/drivers/mfd/twl-core.c
++++ b/drivers/mfd/twl-core.c
+@@ -1057,6 +1057,9 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 	clocks_init(&client->dev, pdata->clock);
+ 
+ 	/* load power event scripts */
++	twl_i2c_write_u8(TWL4030_MODULE_USB, 0x08 /* value */, 0xBB /* register (CARKIT_ANA_CTRL) */);
++        twl_i2c_write_u8(TWL4030_MODULE_USB, 0x01 /* value */, 0xFD /*register (PHY_PWR_CTRL) */);
++
+ 	if (twl_has_power() && pdata->power)
+ 		twl4030_power_init(pdata->power);
+ 

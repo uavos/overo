@@ -1,0 +1,20 @@
+#!/bin/sh
+dir=$PWD
+rootfs=overo-ap-image-overo.tar.bz2
+if [ -e $rootfs ]; then
+umount /dev/mtdblock4
+echo "Erasing and formatting rootfs partition ..."
+flash_eraseall -j /dev/mtd4
+echo "Mounting rootfs partition ..."
+mkdir -p /media/mtdblock4
+mount -t jffs2 /dev/mtdblock4 /media/mtdblock4
+echo "Extracting rootfs archive ..."
+cd /media/mtdblock4
+tar xjf $dir/$rootfs
+sync
+cd "$dir"
+umount /dev/mtdblock4
+else
+echo "ERROR:  couldn't find rootfs tarball"
+fi
+

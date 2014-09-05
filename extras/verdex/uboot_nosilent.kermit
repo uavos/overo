@@ -1,0 +1,13 @@
+LINEOUT pri
+INPUT 3 GUM>
+LINEOUT setenv silent
+INPUT 1 GUM>
+LINEOUT setenv stderr serial
+INPUT 1 GUM>
+LINEOUT setenv stdout serial
+INPUT 1 GUM>
+LINEOUT setenv bootargs console=ttyS0,115200n8 root=1f01 rootfstype=jffs2 reboot=cold,hard
+INPUT 1 GUM>
+LINEOUT saveenv
+INPUT 8 GUM>
+
